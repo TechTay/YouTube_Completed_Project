@@ -1,33 +1,26 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import useAuth from "../../hooks/useAuth";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { useParams } from "react-router-dom";
+import RelatedVideos from "./RelatedVideos";
+// Import RelatedVideos and display in THIS page
 
-const videoPage = () => {
-    const [videos, setVideos] = useState([]);
-    
-  
-    useEffect(() => {
-      const getAllVideos = async () => {
-        try {
-          let response = await axios.get(
-            "https://www.googleapis.com/youtube/v3/search?q=MotivationalVideos&key=AIzaSyB7JFFdYJah4J-bbQIscizH68BUw1QCoD4&part=snippet",
-          );
-          console.log(response.data);
-          navigate("/")
-        } catch (er) {
-          console.log(er);
-        }
-      };
-      getAllVideos();
-    }, []);
+const VideoPage = () => {
+  const {videoId} = useParams()
   
     return (
-        <div>
-
+        <div style={{textAlign: 'center'}}>
+          <iframe
+        id="ytplayer"
+        type="text/html"
+        width="640"
+        height="360"
+        src={`https://www.youtube.com/embed/${videoId}?autoplay=1&origin=http://example.com`}
+        frameborder="0"
+      ></iframe>
+      <RelatedVideos />
+      {/* RelatedVideos component */}
         </div>
     )
 }
 
-export default videoPage
+export default VideoPage
+
