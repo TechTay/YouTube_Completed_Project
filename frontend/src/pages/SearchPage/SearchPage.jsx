@@ -4,14 +4,14 @@ import useAuth from "../../hooks/useAuth";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const SearchPage = () => {
+const SearchPage = (props) => {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
     const fetchVideos = async () => {
       try {
         let response = await axios.get(
-          "https://www.googleapis.com/youtube/v3/search?q=motivationalVideos&key=AIzaSyB7JFFdYJah4J-bbQIscizH68BUw1QCoD4&part=snippet"
+          `https://www.googleapis.com/youtube/v3/search?q=${props.search}&key=AIzaSyB7JFFdYJah4J-bbQIscizH68BUw1QCoD4&part=snippet`
         );
         console.log(response.data.items);
         setVideos(response.data.items);
@@ -24,6 +24,7 @@ const SearchPage = () => {
   
   return (
     <div className="container">
+
       {videos.map((el) => {
         return (
           <Link to={`videos/${el.id.videoId}`}>

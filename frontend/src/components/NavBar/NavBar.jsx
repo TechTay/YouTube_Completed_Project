@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
@@ -6,17 +7,17 @@ import "./NavBar.css";
 
 
 
-const Navbar = () => {
+const Navbar = (props) => {
   const { logoutUser, user } = useContext(AuthContext);
-  const [search, setSearch] = useState([''])
+  
   const navigate = useNavigate();
 
-  function handleSubmit(event) {
+
+  async function handleSubmit(event) {
     event.preventDefault();
-    let newSearch = {
-        search: search
-    };
-    console.log(handleSubmit)
+    let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${props.search}&key=AIzaSyB7JFFdYJah4J-bbQIscizH68BUw1QCoD4&part=snippet` 
+    )
+    console.log(response.data.items)
   }
 
   return (
@@ -28,9 +29,10 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <button onSubmit={handleSubmit} type='submit'className='search' style={{'marginTop': '0.1em', 'marginRight': '0.7em'}}>Search </button>
-          <input type='text' className='SearchBar' placeholder="Search Videos Here!" value={search} onChange={(event) => setSearch(event.target.value)}/>
-          
+          <form onSubmit={(e) => handleSubmit(e)}>
+          <button  type='submit'className='search' style={{'marginTop': '0.1em', 'marginRight': '0.7em'}}>Search </button>
+          <input type='text' className='SearchBar' placeholder="Search Videos Here!" value={props.search} onChange={(event) => props.setSearch(event.target.value)}/>
+          </form>      
         </li>
         <li>
           {user ? (

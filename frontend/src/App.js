@@ -6,7 +6,7 @@ import "./App.css";
 import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
-import AddCarPage from "./pages/AddCarPage/AddCarPage";
+import { useState } from "react";
 import SearchPage from "./pages/SearchPage/SearchPage";
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
@@ -16,19 +16,21 @@ import VideoPage from "./pages/VideoPage/VideoPage";
 import PrivateRoute from "./utils/PrivateRoute";
 
 function App() {
+  const [search, setSearch] = useState([''])
+ 
   return (
     <div>
-      <Navbar />
+      <Navbar search={search} setSearch={setSearch}/>
       <Routes>
         <Route
           path="/"
           element={
             
-              <SearchPage />
+              <SearchPage search={search} />
     
           }
         />
-        <Route path="/videos/:videoId/" element={<VideoPage />} />
+        <Route path="/videos/:videoId/" element={<VideoPage search={search} setSearch={setSearch} />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         {/* <Route path="/addcar" element={<PrivateRoute><AddCarPage /></PrivateRoute>} /> */}
