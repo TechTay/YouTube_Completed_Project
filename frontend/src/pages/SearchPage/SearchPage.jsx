@@ -21,14 +21,13 @@ const SearchPage = () => {
     };
     fetchVideos();
   }, []);
-
+  
   return (
     <div className="container">
-      {/* <h2>{user.username}</h2> */}
       {videos.map((el) => {
         return (
           <Link to={`videos/${el.id.videoId}`}>
-            <img src={el.snippet.thumbnails.default.url} width='200' height= '150'/>
+            <img style={{'padding': '1.5em', 'margin': '1em'}} src={el.snippet.thumbnails.default.url} width='250' height= '200'/>
           </Link>
         );
       })}
