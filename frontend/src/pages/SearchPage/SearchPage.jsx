@@ -20,7 +20,7 @@ const SearchPage = (props) => {
       }
     };
     fetchVideos();
-  }, []);
+  }, [props.search]);
   
   return (
     <div className="container">

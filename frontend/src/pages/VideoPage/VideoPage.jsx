@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import RelatedVideos from "./RelatedVideos";
-// Import RelatedVideos and display in THIS page
+
 
 const VideoPage = () => {
   const {videoId} = useParams()
@@ -17,7 +17,6 @@ const VideoPage = () => {
         frameborder="0"
       ></iframe>
       <RelatedVideos />
-      {/* RelatedVideos component */}
         </div>
     )
 }

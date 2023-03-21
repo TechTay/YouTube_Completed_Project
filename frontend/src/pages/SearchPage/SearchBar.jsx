@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
 
-const SearchBar = () => {
+const SearchBar = (props) => {
 
     const [search, setSearch] = useState([''])
 
     function handleSubmit(event) {
         event.preventDefault();
-        let newSearch = {
-            search: search
-        };
-        props.filterMusic(search)
+       props.setSearch(search)
     }
     return (
         <form onSubmit={handleSubmit} className='search'>
