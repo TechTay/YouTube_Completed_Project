@@ -7,7 +7,7 @@ const VideoPage = () => {
   const {videoId} = useParams()
   
     return (
-        <div style={{textAlign: 'center'}}>
+        <div style={{textAlign: 'center', padding: '2em'}}>
           <iframe
         id="ytplayer"
         type="text/html"

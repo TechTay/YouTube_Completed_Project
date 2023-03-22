@@ -2,8 +2,10 @@ import React from 'react';
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import { Link } from "react-router-dom";
+import "./RelatedVideos.css"
 
-const RelatedVideos = (props) => {
+
+const RelatedVideos = () => {
     // Use a prop here that will pull the videoId from the VideoPage parent
     // In the "return", you will want to MAP the response you get back -> producing a thumbnail for each video
   
@@ -32,7 +34,11 @@ const RelatedVideos = (props) => {
            {rVideos.map((el) => {
         return (
           <Link to={`videos/${el.id.videoId}`}>
-            <img style={{'padding': '.5em', '': '1em'}}  src={el.snippet.thumbnails.default.url} width='200' height= '150'/>
+            <div>
+            <div class="col-6"></div>
+            <img className='d-flex' style={{'padding': '.5em', '': '1em'}}  src={el.snippet.thumbnails.default.url} width='200' height= '150'/>
+            </div>
+           
           </Link>
         );
            })}

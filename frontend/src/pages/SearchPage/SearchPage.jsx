@@ -24,7 +24,6 @@ const SearchPage = (props) => {
   
   return (
     <div className="container">
-
       {videos.map((el) => {
         return (
           <Link to={`videos/${el.id.videoId}`}>

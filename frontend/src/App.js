@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import "./App.css";
 
 // Pages Imports
-import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import { useState } from "react";
@@ -16,7 +15,7 @@ import VideoPage from "./pages/VideoPage/VideoPage";
 import PrivateRoute from "./utils/PrivateRoute";
 
 function App() {
-  const [search, setSearch] = useState([''])
+  const [search, setSearch] = useState(['Motivation'])
  
   return (
     <div>
@@ -30,7 +29,7 @@ function App() {
     
           }
         />
-        <Route path="/videos/:videoId/" element={<VideoPage search={search} setSearch={setSearch} />} />
+        <Route path="/videos/:videoId/" element={<VideoPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         {/* <Route path="/addcar" element={<PrivateRoute><AddCarPage /></PrivateRoute>} /> */}
