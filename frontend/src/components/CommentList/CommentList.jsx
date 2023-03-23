@@ -1,7 +1,10 @@
 import React from "react";
+import Comment from "./Comment";
 
-export default function CommentList(comments) {
-    return (
-        <div>CommentList</div>
-    )
+const CommentList = (props) => {
+    return (<ul>
+        {props.comments.map( comment => <Comment comment={comment}/>)}
+    </ul>)
 }
+
+export default CommentList

@@ -11,8 +11,10 @@ import SearchPage from "./pages/SearchPage/SearchPage";
 import Navbar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
 import VideoPage from "./pages/VideoPage/VideoPage";
+
 // Util Imports
 import PrivateRoute from "./utils/PrivateRoute";
+import CommentForm from "./components/CommentForm/CommentForm";
 
 function App() {
   const [search, setSearch] = useState(['Motivation'])
@@ -32,7 +34,6 @@ function App() {
         <Route path="/videos/:videoId/" element={<VideoPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
-        {/* <Route path="/addcar" element={<PrivateRoute><AddCarPage /></PrivateRoute>} /> */}
       </Routes>
       <Footer />
     </div>

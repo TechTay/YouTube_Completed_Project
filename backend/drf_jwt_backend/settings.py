@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'cars.apps.CarsConfig',  # This app is for example use only
     'comments',
     'replies',
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
