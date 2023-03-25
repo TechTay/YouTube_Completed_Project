@@ -3,15 +3,21 @@ import { useParams } from "react-router-dom";
 import CommentList from "../../components/CommentList/CommentList";
 import RelatedVideos from "./RelatedVideos";
 import CommentForm from "../../components/CommentForm/CommentForm";
+import ReplyForm from "../../components/Replies/ReplyForm/ReplyForm";
+import ReplyList from "../../components/Replies/ReplyList/ReplyList";
 import axios from "axios";
 import useAuth from "../../hooks/useAuth";
+import Comment from "../../components/CommentList/Comment";
 
 const VideoPage = (props) => {
   const [user, token] = useAuth();
   const { videoId } = useParams();
   const [comments, setComments] = useState([]);
-  const [video, setVideo] = useState({snippet:{title:"", description:""}});
-
+  const [video, setVideo] = useState({
+    snippet: { title: "", description: "" },
+  });
+  const [replies, setReplies] = useState([{}]);
+  
   useEffect(() => {
     const fetchVideos = async () => {
       try {
@@ -26,6 +32,21 @@ const VideoPage = (props) => {
     };
     fetchVideos();
   }, []);
+
+  const getReply = async () => {
+    let response = await axios.get(
+      `http://127.0.0.1:8000/api/replies/`,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    setReplies(response.data);
+    console.log(response.data);
+  };
+  useEffect(() => getComments(), []);
+
   const getComments = async () => {
     let response = await axios.get(
       `http://127.0.0.1:8000/api/comment/${videoId}/`,
@@ -38,7 +59,7 @@ const VideoPage = (props) => {
     setComments(response.data);
     console.log(response.data);
   };
-    useEffect(() => getComments(), [])
+  useEffect(() => getComments(), []);
   return (
     <div style={{ textAlign: "center", padding: "2em" }}>
       <iframe
@@ -49,14 +70,13 @@ const VideoPage = (props) => {
         height="360"
         src={`https://www.youtube.com/embed/${videoId}?autoplay=1&origin=http://example.com`}
         frameborder="0"
-      >
-      </iframe>
+      ></iframe>
       <div>{video.snippet.title}</div>
-      <div>{video.snippet.description}</div> 
+      <div>{video.snippet.description}</div>
 
       <CommentForm videoId={videoId} getComments={getComments} />
       <CommentList comments={comments} />
-      {/* <RelatedVideos /> */}
+      <Comment commentId={props.comment.id} getReply={getReply} />
       <div>
         <RelatedVideos />
       </div>

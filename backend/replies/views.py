@@ -25,6 +25,6 @@ def user_replies(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'GET':
-        replies = Reply.objects.filter(user_id=request.user.id)
+        replies = Reply.objects.filter(comment_id=request.GET.get("id"))
         serializer = ReplySerializer(replies, many=True)
         return Response(serializer.data)

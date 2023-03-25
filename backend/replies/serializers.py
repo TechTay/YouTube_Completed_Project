@@ -7,5 +7,8 @@ from .models import Reply
 class ReplySerializer(serializers.ModelSerializer):
     class Meta:
         model = Reply
-        fields = ['id', 'comment', 'text','user_id']
+        fields = ['id', 'comment', 'comment_id', 'text','user_id', 'user']
         depth = 1
+
+    user_id = serializers.IntegerField(write_only=True)
+    comment_id = serializers.IntegerField(write_only=True)
