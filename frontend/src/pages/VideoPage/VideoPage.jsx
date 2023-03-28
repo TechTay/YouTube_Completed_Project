@@ -3,15 +3,14 @@ import { useParams } from "react-router-dom";
 import CommentList from "../../components/CommentList/CommentList";
 import RelatedVideos from "./RelatedVideos";
 import CommentForm from "../../components/CommentForm/CommentForm";
-import ReplyForm from "../../components/Replies/ReplyForm/ReplyForm";
-import ReplyList from "../../components/Replies/ReplyList/ReplyList";
 import axios from "axios";
 import useAuth from "../../hooks/useAuth";
-import Comment from "../../components/CommentList/Comment";
+import "./VideoPage.css"
 
-const VideoPage = (props) => {
+const VideoPage = () => {
   const [user, token] = useAuth();
   const { videoId } = useParams();
+  const [video_ID, setVideo_ID] = useState(videoId)
   const [comments, setComments] = useState([]);
   const [video, setVideo] = useState({
     snippet: { title: "", description: "" },
@@ -22,7 +21,7 @@ const VideoPage = (props) => {
     const fetchVideos = async () => {
       try {
         let response = await axios.get(
-          `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=AIzaSyB7JFFdYJah4J-bbQIscizH68BUw1QCoD4&part=snippet`
+          `https://www.googleapis.com/youtube/v3/videos?id=${video_ID}&key=AIzaSyB7JFFdYJah4J-bbQIscizH68BUw1QCoD4&part=snippet`
         );
         console.log(response.data.items);
         setVideo(response.data.items[0]);
@@ -31,25 +30,13 @@ const VideoPage = (props) => {
       }
     };
     fetchVideos();
-  }, []);
+  }, [video_ID]);
 
-  const getReply = async () => {
-    let response = await axios.get(
-      `http://127.0.0.1:8000/api/replies/`,
-      {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      }
-    );
-    setReplies(response.data);
-    console.log(response.data);
-  };
   useEffect(() => getComments(), []);
 
   const getComments = async () => {
     let response = await axios.get(
-      `http://127.0.0.1:8000/api/comment/${videoId}/`,
+      `http://127.0.0.1:8000/api/comment/${video_ID}/`,
       {
         headers: {
           Authorization: "Bearer " + token,
@@ -61,24 +48,24 @@ const VideoPage = (props) => {
   };
   useEffect(() => getComments(), []);
   return (
-    <div style={{ textAlign: "center", padding: "2em" }}>
+    <div className="form" style={{ textAlign: "center", padding: "2em" }}>
       <iframe
         id="ytplayer"
         type="text/html"
         title="title"
         width="640"
         height="360"
-        src={`https://www.youtube.com/embed/${videoId}?autoplay=1&origin=http://example.com`}
+        src={`https://www.youtube.com/embed/${video_ID}?autoplay=1&origin=http://example.com`}
         frameborder="0"
       ></iframe>
       <div>{video.snippet.title}</div>
       <div>{video.snippet.description}</div>
 
-      <CommentForm videoId={videoId} getComments={getComments} />
+      <CommentForm videoId={video_ID} getComments={getComments} />
       <CommentList comments={comments} />
-      <Comment commentId={props.comment.id} getReply={getReply} />
+     
       <div>
-        <RelatedVideos />
+        <RelatedVideos videoId={video_ID} setVideo_ID={setVideo_ID}/>
       </div>
     </div>
   );

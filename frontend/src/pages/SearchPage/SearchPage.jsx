@@ -27,7 +27,7 @@ const SearchPage = (props) => {
     <div className="container">
       {videos.map((el) => {
         return (
-          <Link to={`videos/${el.id.videoId}`}>
+          <Link to={`/videos/${el.id.videoId}`}>
             <img className="" style={{'padding': '1.5em', 'margin': '1em'}} src={el.snippet.thumbnails.default.url} width='250' height= '200'/>
             <h5>{el.snippet.title}</h5>
             <h5>{el.snippet.description}</h5>

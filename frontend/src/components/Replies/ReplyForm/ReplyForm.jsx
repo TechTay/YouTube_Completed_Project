@@ -4,19 +4,19 @@ import useCustomForm from "../../../hooks/useCustomForm";
 
 // const [, setText] = useState([""]);
 
-const ReplyForm = (props) => {
+const ReplyForm = ({commentId,getReplies}) => {
   const [user, token] = useAuth();
   const [formData, handleInputChange, handleSubmit, reset] = useCustomForm(postReply);
 
   async function postReply(formData) {
     try {
       let reply = {
-        comment_Id: props.commentId,
+        comment_id: commentId,
         text: formData.text,
-        user_id: 1,
+        user_id: user.id,
       };
       let response = await axios.post(
-        `http://127.0.0.1:8000/api/comment/${props.videoId}/`,
+        `http://127.0.0.1:8000/api/replies/`,
         reply,
         {
           headers: {
@@ -24,7 +24,7 @@ const ReplyForm = (props) => {
           },
         }
       );
-     props.getReply() 
+     getReplies() 
     } catch (error) {}
   }
 
@@ -37,7 +37,7 @@ const ReplyForm = (props) => {
           <input
             name="text"
             type="text"
-            value={formData.name}
+            value={formData.text}
             onChange={(e) => handleInputChange(e)}
           />
         </label>
